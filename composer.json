@@ -6,8 +6,8 @@
     "youmy001/apine-framework": "1.2.x-dev"
   },
   "autoload": {
-      "psr-4": {
-          "RPLib\\": "src/"
-      }
+    "psr-4": {
+      "RPLib\\": "src/"
+    }
   }
 }
