@@ -47,15 +47,27 @@ trait Entity {
     }
 
     /**
-     * @param Attribute $attribute
+     * @param string $attribute
      * @return bool
      */
-    public function hasAttribute(Attribute $attribute) : bool {
+    public function hasAttribute(string $attribute) : bool {
         $filter = array_filter($this->attributes, function(Attribute $item) use ($attribute) {
-            return $item->getName() == $attribute->getName();
+            return $item->getName() == $attribute;
         });
 
         return count($filter) > 0;
+    }
+
+    /**
+     * @param string $attribute
+     * @return Attribute
+     */
+    public function getAttributeByName(string $attribute) : Attribute {
+        $filter = array_filter($this->attributes, function(Attribute $item) use ($attribute) {
+            return $item->getName() == $attribute;
+        });
+
+        return count($filter) > 0 ? $filter[0] : null;
     }
 
     /**
@@ -66,15 +78,27 @@ trait Entity {
     }
 
     /**
-     * @param Statistic $statistics
+     * @param string $statistic
      * @return bool
      */
-    public function hasStatistic(Statistic $statistics) : bool {
-        $filter = array_filter($this->statistics, function(Statistic $item) use ($statistics) {
-            return $item->getName() == $statistics->getName();
+    public function hasStatistic(string $statistic) : bool {
+        $filter = array_filter($this->statistics, function(Statistic $item) use ($statistic) {
+            return $item->getName() == $statistic;
         });
 
         return count($filter) > 0;
+    }
+
+    /**
+     * @param string $statistic
+     * @return Statistic
+     */
+    public function getStatisticByName(string $statistic) : Statistic {
+        $filter = array_filter($this->statistics, function(Statistic $item) use ($statistic) {
+            return $item->getName() == $statistic;
+        });
+
+        return count($filter) > 0 ? $filter[0] : null;
     }
 
     /**
