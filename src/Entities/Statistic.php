@@ -41,7 +41,7 @@ class Statistic implements IIdentifiable {
                 new StorageField('reference', function($value) {
                     $this->setReference(new StatisticReference($value));
                 }),
-                new StorageField('type', function($value) {
+                new StorageField('value', function($value) {
                     $this->setValue(unserialize($value));
                 })
             ]);

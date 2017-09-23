@@ -171,7 +171,7 @@ trait Entity {
 
             if (count($results) > 0) {
                 foreach ($results as $result) {
-                    $objects[] = $class->newInstance($result);
+                    $objects[] = $class->newInstance($result[$entity->getTargetField()]);
                 }
             }
         } catch (Exception $e) {

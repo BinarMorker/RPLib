@@ -41,7 +41,7 @@ class Attribute implements IIdentifiable {
                 new StorageField('reference', function($value) {
                     $this->setReference(new AttributeReference($value));
                 }),
-                new StorageField('type', function($value) {
+                new StorageField('value', function($value) {
                     $this->setValue(unserialize($value));
                 })
             ]);
