@@ -113,7 +113,7 @@ trait Identifiable {
             $columns[] = '`id`';
         }
 
-        $storage->execute("INSERT INTO `{$this->table}` ({$columns}) VALUES ({$values}) ON DUPLICATE KEY UPDATE;");
+        $storage->execute("REPLACE INTO `{$this->table}` ({$columns}) VALUES ({$values});");
         $this->id = $storage->getLastInsertId();
         return $this->id;
     }

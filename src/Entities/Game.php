@@ -178,7 +178,7 @@ class Game {
      * @param Attribute $attribute
      */
     public function setAttribute(Attribute $attribute) {
-        if ($this->hasAttribute($attribute)) {
+        if ($this->hasAttribute($attribute->getName())) {
             throw new UnexpectedValueException("This attribute is already present.");
         }
 
@@ -193,7 +193,7 @@ class Game {
      * @param Statistic $statistic
      */
     public function setStatistic(Statistic $statistic) {
-        if ($this->hasStatistic($statistic)) {
+        if ($this->hasStatistic($statistic->getName())) {
             throw new UnexpectedValueException("This statistic is already present.");
         }
 

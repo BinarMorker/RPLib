@@ -40,7 +40,7 @@ class AttributeReference {
 
     public static function create(string $name) : self {
         $storage = Storage::getInstance();
-        $results = $storage->query("SELECT `id`, `name` FROM `rplib_attribute_reference` WHERE `name` = {$name}");
+        $results = $storage->query("SELECT `id`, `name` FROM `rplib_attribute_reference` WHERE `name` = '{$name}'");
 
         if (count($results) > 0) {
             return new self($results[0]['id']);
