@@ -47,27 +47,54 @@ trait Entity {
     }
 
     /**
-     * @param string $attribute
-     * @return bool
+     * @param string $attributeName
+     * @return Attribute[]
      */
-    public function hasAttribute(string $attribute) : bool {
-        $filter = array_filter($this->attributes, function(Attribute $item) use ($attribute) {
-            return $item->getName() == $attribute;
+    public function getAttributesByName(string $attributeName) : array {
+        $filter = array_filter($this->attributes, function(Attribute $item) use ($attributeName) {
+            return $item->getName() == $attributeName;
         });
 
-        return count($filter) > 0;
+        return $filter;
     }
 
     /**
-     * @param string $attribute
+     * @param string $attributeName
+     * @return bool
+     */
+    public function hasAttribute(string $attributeName) : bool {
+        return count($this->getAttributesByName($attributeName)) > 0;
+    }
+
+    /**
+     * @param string $attributeName
      * @return Attribute
      */
-    public function getAttributeByName(string $attribute) : Attribute {
-        $filter = array_filter($this->attributes, function(Attribute $item) use ($attribute) {
-            return $item->getName() == $attribute;
-        });
+    public function getAttribute(string $attributeName) : Attribute {
+        $attributes = $this->getAttributesByName($attributeName);
+        return count($attributes) > 0 ? $attributes[0] : null;
+    }
 
-        return count($filter) > 0 ? $filter[0] : null;
+    /**
+     * @param Attribute $attribute
+     */
+    private function setAttribute(Attribute $attribute) {
+        $hasAttribute = $this->hasAttribute($attribute->getName());
+
+        if ($hasAttribute) {
+            $entityAttributes = $this->attributes;
+            $this->attributes = [];
+
+            foreach ($entityAttributes as $entityAttribute) {
+                if ($entityAttribute->getName() == $attribute->getName()) {
+                    $this->attributes[] = $attribute;
+                } else {
+                    $this->attributes[] = $entityAttribute;
+                }
+            }
+        } else {
+            $this->attributes[] = $attribute;
+        }
     }
 
     /**
@@ -78,27 +105,54 @@ trait Entity {
     }
 
     /**
-     * @param string $statistic
-     * @return bool
+     * @param string $statisticName
+     * @return Statistic[]
      */
-    public function hasStatistic(string $statistic) : bool {
-        $filter = array_filter($this->statistics, function(Statistic $item) use ($statistic) {
-            return $item->getName() == $statistic;
+    public function getStatisticsByName(string $statisticName) : array {
+        $filter = array_filter($this->statistics, function(Statistic $item) use ($statisticName) {
+            return $item->getName() == $statisticName;
         });
 
-        return count($filter) > 0;
+        return $filter;
     }
 
     /**
-     * @param string $statistic
+     * @param string $statisticName
+     * @return bool
+     */
+    public function hasStatistic(string $statisticName) : bool {
+        return count($this->getStatisticsByName($statisticName)) > 0;
+    }
+
+    /**
+     * @param string $statisticName
      * @return Statistic
      */
-    public function getStatisticByName(string $statistic) : Statistic {
-        $filter = array_filter($this->statistics, function(Statistic $item) use ($statistic) {
-            return $item->getName() == $statistic;
-        });
+    public function getStatistic(string $statisticName) : Statistic {
+        $statistics = $this->getStatisticsByName($statisticName);
+        return count($statistics) > 0 ? $statistics[0] : null;
+    }
 
-        return count($filter) > 0 ? $filter[0] : null;
+    /**
+     * @param Statistic $statistic
+     */
+    private function setStatistic(Statistic $statistic) {
+        $hasStatistic = $this->hasStatistic($statistic->getName());
+
+        if ($hasStatistic) {
+            $entityStatistics = $this->statistics;
+            $this->statistics = [];
+
+            foreach ($entityStatistics as $entityStatistic) {
+                if ($entityStatistic->getName() == $statistic->getName()) {
+                    $this->statistics[] = $statistic;
+                } else {
+                    $this->statistics[] = $entityStatistic;
+                }
+            }
+        } else {
+            $this->statistics[] = $statistic;
+        }
     }
 
     /**
@@ -142,10 +196,12 @@ trait Entity {
         $this->__save($parameters);
 
         foreach ($this->attributes as $attribute) {
+            $attribute->save();
             $this->saveLinked($this->attributeLink, $attribute);
         }
 
         foreach ($this->statistics as $statistic) {
+            $statistic->save();
             $this->saveLinked($this->statisticLink, $statistic);
         }
     }

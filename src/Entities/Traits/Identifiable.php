@@ -108,15 +108,13 @@ trait Identifiable {
         $columns = join(',', $columns);
         $values = join(',', $values);
 
-        if ($this->id == null) {
-            $storage->execute("INSERT INTO `{$this->table}` ({$columns}) VALUES ({$values})");
-            $this->id = $storage->getLastInsertId();
-        } else {
+        if ($this->id != null) {
             $values[] = $this->id;
             $columns[] = '`id`';
-            $storage->execute("REPLACE INTO `{$this->table}` ({$columns}) VALUES ({$values});");
         }
 
+        $storage->execute("INSERT INTO `{$this->table}` ({$columns}) VALUES ({$values}) ON DUPLICATE KEY UPDATE;");
+        $this->id = $storage->getLastInsertId();
         return $this->id;
     }
 

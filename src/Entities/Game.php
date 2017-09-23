@@ -12,7 +12,11 @@ use RPLib\Enums\TurnStatus;
  * @package RPLib\Entities
  */
 class Game {
-    use Entity;
+    use Entity {
+        Entity::save as private saveParameters;
+        Entity::setAttribute as private __setAttribute;
+        Entity::setStatistic as private __setStatistic;
+    }
 
     /**
      * @var Turn[]
@@ -167,4 +171,19 @@ class Game {
         }
     }
 
+    public function save() {
+        $this->saveParameters([
+            'name' => $this->getName()
+        ]);
+
+        foreach ($this->players as $player) {
+            $player->save();
+            $this->saveLinked($this->playerLink, $player);
+        }
+
+        foreach ($this->turns as $turn) {
+            $turn->save();
+            $this->saveLinked($this->turnLink, $turn);
+        }
+    }
 }

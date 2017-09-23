@@ -15,7 +15,11 @@ use UnexpectedValueException;
  * @package RPLib\Entities
  */
 class Turn {
-    use Entity;
+    use Entity {
+        Entity::save as private saveParameters;
+        Entity::setAttribute as private __setAttribute;
+        Entity::setStatistic as private __setStatistic;
+    }
 
     /**
      * @var Player
@@ -59,7 +63,7 @@ class Turn {
     /**
      * @param Attribute $attribute
      */
-    public function addAttribute(Attribute $attribute) {
+    public function setAttribute(Attribute $attribute) {
         if ($this->hasAttribute($attribute)) {
             throw new UnexpectedValueException("This attribute is already present.");
         }
@@ -68,13 +72,13 @@ class Turn {
             throw new OutOfRangeException("This attribute can't be put on a turn.");
         }
 
-        $this->attributes[] = $attribute;
+        $this->__setAttribute($attribute);
     }
 
     /**
      * @param Statistic $statistic
      */
-    public function addStatistic(Statistic $statistic) {
+    public function setStatistic(Statistic $statistic) {
         if ($this->hasStatistic($statistic)) {
             throw new UnexpectedValueException("This statistic is already present.");
         }
@@ -83,7 +87,7 @@ class Turn {
             throw new OutOfRangeException("This statistic can't be put on a turn.");
         }
 
-        $this->statistics[] = $statistic;
+        $this->__setStatistic($statistic);
     }
 
     /**
@@ -208,4 +212,9 @@ class Turn {
         }
     }
 
+    public function save() {
+        $this->saveParameters([
+            'name' => $this->getName()
+        ]);
+    }
 }

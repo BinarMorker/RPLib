@@ -14,7 +14,9 @@ use UnexpectedValueException;
  */
 class Player {
     use Entity {
-        Entity::__save as private saveParameters;
+        Entity::save as private saveParameters;
+        Entity::setAttribute as private __setAttribute;
+        Entity::setStatistic as private __setStatistic;
     }
 
     /**
@@ -39,7 +41,7 @@ class Player {
     /**
      * @param Attribute $attribute
      */
-    public function addAttribute(Attribute $attribute) {
+    public function setAttribute(Attribute $attribute) {
         if ($this->hasAttribute($attribute)) {
             throw new UnexpectedValueException("This attribute is already present.");
         }
@@ -48,13 +50,13 @@ class Player {
             throw new OutOfRangeException("This attribute can't be put on a player.");
         }
 
-        $this->attributes[] = $attribute;
+        $this->__setAttribute($attribute);
     }
 
     /**
      * @param Statistic $statistic
      */
-    public function addStatistic(Statistic $statistic) {
+    public function setStatistic(Statistic $statistic) {
         if ($this->hasStatistic($statistic)) {
             throw new UnexpectedValueException("This statistic is already present.");
         }
@@ -63,7 +65,7 @@ class Player {
             throw new OutOfRangeException("This statistic can't be put on a player.");
         }
 
-        $this->statistics[] = $statistic;
+        $this->__setStatistic($statistic);
     }
 
     public function save() {
