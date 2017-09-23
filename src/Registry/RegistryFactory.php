@@ -16,7 +16,7 @@ class RegistryFactory {
     /**
      * @var Registry
      */
-    public $characters;
+    public $games;
 
     /**
      * @var Registry
@@ -28,7 +28,7 @@ class RegistryFactory {
      */
     public function __construct() {
         $this->players = new Registry();
-        $this->characters = new Registry();
+        $this->games = new Registry();
         $this->turns = new Registry();
     }
 

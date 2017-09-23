@@ -3,9 +3,12 @@
 namespace RPLib\Entities;
 
 use OutOfBoundsException;
+use OutOfRangeException;
+use RPLib\Core\GameManager;
 use RPLib\Entities\Relations\LinkedEntity;
 use RPLib\Entities\Traits\Entity;
 use RPLib\Enums\TurnStatus;
+use UnexpectedValueException;
 
 /**
  * Class Game
@@ -171,6 +174,39 @@ class Game {
         }
     }
 
+    /**
+     * @param Attribute $attribute
+     */
+    public function setAttribute(Attribute $attribute) {
+        if ($this->hasAttribute($attribute)) {
+            throw new UnexpectedValueException("This attribute is already present.");
+        }
+
+        if (!GameManager::getInstance()->getRegistry()->games->hasAttribute($attribute->getReference())) {
+            throw new OutOfRangeException("This attribute can't be put on a game.");
+        }
+
+        $this->__setAttribute($attribute);
+    }
+
+    /**
+     * @param Statistic $statistic
+     */
+    public function setStatistic(Statistic $statistic) {
+        if ($this->hasStatistic($statistic)) {
+            throw new UnexpectedValueException("This statistic is already present.");
+        }
+
+        if (!GameManager::getInstance()->getRegistry()->games->hasStatistic($statistic->getReference())) {
+            throw new OutOfRangeException("This statistic can't be put on a game.");
+        }
+
+        $this->__setStatistic($statistic);
+    }
+
+    /**
+     *
+     */
     public function save() {
         $this->saveParameters([
             'name' => $this->getName()

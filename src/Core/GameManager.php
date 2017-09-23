@@ -22,11 +22,6 @@ class GameManager {
     private static $instance;
 
     /**
-     * @var Game[]
-     */
-    private $games;
-
-    /**
      * Protected constructor to prevent creating a new instance of the class.
      */
     protected function __construct() {
@@ -66,20 +61,6 @@ class GameManager {
      */
     public function getRegistry() : RegistryFactory {
         return $this->registry;
-    }
-
-    /**
-     * @return Game[]
-     */
-    public function getGames() : array {
-        return $this->games;
-    }
-
-    /**
-     * @param Game $game
-     */
-    public function addGame(Game $game) {
-        $this->games[] = $game;
     }
 
 }
