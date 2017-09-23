@@ -141,11 +141,11 @@ class Storage {
         switch (get_class($connection)) {
             case 'Apine\Core\Database':
                 try {
-                    $connection->beginTransaction();
+                    $connection->open_transaction();
                     $method();
-                    $connection->rollback();
+                    $connection->rollback_transaction();
                 } catch (Exception $e) {
-                    $connection->rollback();
+                    $connection->rollback_transaction();
                     throw $e;
                 }
 

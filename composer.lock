@@ -4,8 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa21fe17f8c0acf69a9e68c86dcf815b",
-    "packages": [
+    "content-hash": "533787da1b3fd5485346fd9fa5df0c7b",
+    "packages": [],
+    "packages-dev": [
         {
             "name": "binarmorker/tinytemplate",
             "version": "1.1.3",
@@ -1696,12 +1697,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Youmy001/apine-framework.git",
-                "reference": "0cde5654884ca794f16404270f39a2bbf00872d6"
+                "reference": "cb29b5357ff15ab4a45d43f507fe7a555caf1605"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Youmy001/apine-framework/zipball/0cde5654884ca794f16404270f39a2bbf00872d6",
-                "reference": "0cde5654884ca794f16404270f39a2bbf00872d6",
+                "url": "https://api.github.com/repos/Youmy001/apine-framework/zipball/cb29b5357ff15ab4a45d43f507fe7a555caf1605",
+                "reference": "cb29b5357ff15ab4a45d43f507fe7a555caf1605",
                 "shasum": ""
             },
             "require": {
@@ -1733,10 +1734,9 @@
                 }
             ],
             "description": "APIne is a simple to use modular MVC Framework ready for the IoT (Internet of Things).",
-            "time": "2017-09-20 03:25:16"
+            "time": "2017-09-20T05:07:22+00:00"
         }
     ],
-    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
