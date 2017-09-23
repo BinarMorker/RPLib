@@ -128,7 +128,7 @@ trait Identifiable {
     /**
      * @param int $id
      */
-    public function setId($id) {
+    public function setId(int $id) {
         $this->id = $id;
     }
 

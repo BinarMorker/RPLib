@@ -3,6 +3,7 @@
 namespace RPLib\Entities\Relations;
 
 use Exception;
+use RPLib\Entities\Interfaces\IIdentifiable;
 use RPLib\Entities\Traits\Identifiable;
 use RPLib\Enums\ValueType;
 use RPLib\Core\Storage;
@@ -11,7 +12,7 @@ use RPLib\Core\Storage;
  * Class StatisticReference
  * @package RPLib\Entities\Relations
  */
-class StatisticReference {
+class StatisticReference implements IIdentifiable {
     use Identifiable {
         Identifiable::__construct as private initialize;
         Identifiable::save as private __save;

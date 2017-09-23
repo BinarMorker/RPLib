@@ -20,9 +20,9 @@ final class TurnTest extends TestCase {
         $attribute->setName("Test");
         $attribute->setReference($reference);
         $turn = new Turn();
-        $turn->addAttribute($attribute);
+        $turn->setAttribute($attribute);
 
-        $this->assertTrue($turn->hasAttribute($attribute));
+        $this->assertTrue($turn->hasAttribute($attribute->getName()));
     }
 
     public function testTurnCanHaveRegisteredStatistic() {
@@ -32,9 +32,9 @@ final class TurnTest extends TestCase {
         $statistic->setName("Test");
         $statistic->setReference($reference);
         $turn = new Turn();
-        $turn->addStatistic($statistic);
+        $turn->setStatistic($statistic);
 
-        $this->assertTrue($turn->hasStatistic($statistic));
+        $this->assertTrue($turn->hasStatistic($statistic->getName()));
     }
 
     public function testTurnCannotHaveDuplicateAttribute() {
@@ -46,8 +46,8 @@ final class TurnTest extends TestCase {
         $attribute->setName("Test");
         $attribute->setReference($reference);
         $turn = new Turn();
-        $turn->addAttribute($attribute);
-        $turn->addAttribute($attribute);
+        $turn->setAttribute($attribute);
+        $turn->setAttribute($attribute);
     }
 
     public function testTurnCannotHaveDuplicateStatistic() {
@@ -59,8 +59,8 @@ final class TurnTest extends TestCase {
         $statistic->setName("Test");
         $statistic->setReference($reference);
         $turn = new Turn;
-        $turn->addStatistic($statistic);
-        $turn->addStatistic($statistic);
+        $turn->setStatistic($statistic);
+        $turn->setStatistic($statistic);
     }
 
     public function testTurnCannotHaveUnregisteredAttribute() {
@@ -72,7 +72,7 @@ final class TurnTest extends TestCase {
         $attribute->setName("Test");
         $attribute->setReference($reference);
         $turn = new Turn();
-        $turn->addAttribute($attribute);
+        $turn->setAttribute($attribute);
     }
 
     public function testTurnCannotHaveUnregisteredStatistic() {
@@ -84,7 +84,7 @@ final class TurnTest extends TestCase {
         $statistic->setName("Test");
         $statistic->setReference($reference);
         $turn = new Turn();
-        $turn->addStatistic($statistic);
+        $turn->setStatistic($statistic);
     }
 
     public function testTurnStatusCyclesCorrectly() {

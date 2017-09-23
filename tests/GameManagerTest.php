@@ -21,7 +21,7 @@ final class GameManagerTest extends TestCase {
 
         $gameManager->getRegistry()->players->addAttribute($reference);
         $gameManager->getRegistry()->turns->addAttribute($reference);
-        $gameManager->getRegistry()->characters->addAttribute($reference);
+        $gameManager->getRegistry()->games->addAttribute($reference);
 
         $this->assertContains($reference, $gameManager->getRegistry()->players->getAttributes());
     }
@@ -34,7 +34,7 @@ final class GameManagerTest extends TestCase {
 
         $gameManager->getRegistry()->players->addStatistic($reference);
         $gameManager->getRegistry()->turns->addStatistic($reference);
-        $gameManager->getRegistry()->characters->addStatistic($reference);
+        $gameManager->getRegistry()->games->addStatistic($reference);
 
         $this->assertContains($reference, $gameManager->getRegistry()->players->getStatistics());
     }
@@ -69,8 +69,6 @@ final class GameManagerTest extends TestCase {
     }
 
     public function testGameManagerNextTurnWorkflow() {
-        $gameManager = GameManager::getInstance();
-
         $player1 = new Player();
         $player1->setName("Test #1");
 
@@ -84,7 +82,6 @@ final class GameManagerTest extends TestCase {
         $game->addPlayer($player1);
         $game->addPlayer($player2);
         $game->addPlayer($player3);
-        $gameManager->addGame($game);
 
         $this->assertEquals(3, count($game->getPlayers()));
 

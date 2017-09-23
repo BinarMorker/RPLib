@@ -4,6 +4,7 @@ namespace RPLib\Entities;
 
 use OutOfRangeException;
 use RPLib\Core\GameManager;
+use RPLib\Entities\Interfaces\IEntity;
 use RPLib\Entities\Relations\LinkedEntity;
 use RPLib\Entities\Traits\Entity;
 use UnexpectedValueException;
@@ -12,7 +13,7 @@ use UnexpectedValueException;
  * Class Player
  * @package RPLib\Entities
  */
-class Player {
+class Player implements IEntity {
     use Entity {
         Entity::save as private saveParameters;
         Entity::setAttribute as private __setAttribute;
@@ -42,7 +43,7 @@ class Player {
      * @param Attribute $attribute
      */
     public function setAttribute(Attribute $attribute) {
-        if ($this->hasAttribute($attribute)) {
+        if ($this->hasAttribute($attribute->getName())) {
             throw new UnexpectedValueException("This attribute is already present.");
         }
 
@@ -57,7 +58,7 @@ class Player {
      * @param Statistic $statistic
      */
     public function setStatistic(Statistic $statistic) {
-        if ($this->hasStatistic($statistic)) {
+        if ($this->hasStatistic($statistic->getName())) {
             throw new UnexpectedValueException("This statistic is already present.");
         }
 

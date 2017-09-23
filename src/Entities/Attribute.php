@@ -2,6 +2,7 @@
 
 namespace RPLib\Entities;
 
+use RPLib\Entities\Interfaces\IIdentifiable;
 use RPLib\Entities\Relations\AttributeReference;
 use RPLib\Entities\Relations\StorageField;
 use RPLib\Entities\Traits\Identifiable;
@@ -12,7 +13,7 @@ use UnexpectedValueException;
  * Class Attribute
  * @package RPLib\Entities
  */
-class Attribute {
+class Attribute implements IIdentifiable {
     use Identifiable {
         Identifiable::__construct as private initialize;
         Identifiable::save as private __save;

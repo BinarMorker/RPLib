@@ -54,6 +54,18 @@ class Registry {
     }
 
     /**
+     * @param string $referenceName
+     * @return AttributeReference
+     */
+    public function getAttribute(string $referenceName) : AttributeReference {
+        $filter = array_filter($this->attributeReferences, function(AttributeReference $item) use ($referenceName) {
+            return $item->getName() == $referenceName;
+        });
+
+        return count($filter) > 0 ? $filter[0] : $filter;
+    }
+
+    /**
      * @return AttributeReference[]
      */
     public function getAttributes() : array {

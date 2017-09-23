@@ -6,6 +6,7 @@ use Exception;
 use ReflectionClass;
 use RPLib\Core\Storage;
 use RPLib\Entities\Attribute;
+use RPLib\Entities\Interfaces\IIdentifiable;
 use RPLib\Entities\Relations\LinkedEntity;
 use RPLib\Entities\Statistic;
 
@@ -182,9 +183,9 @@ trait Entity {
 
     /**
      * @param LinkedEntity $link
-     * @param Identifiable $target
+     * @param IIdentifiable $target
      */
-    private function saveLinked(LinkedEntity $link, Identifiable $target) {
+    private function saveLinked(LinkedEntity $link, IIdentifiable $target) {
         $storage = Storage::getInstance();
         $storage->execute("REPLACE INTO `{$link->getTableName()}` ({$link->getSourceField()}, {$link->getTargetField()}) VALUES ({$this->id}, {$target->getId()})");
     }

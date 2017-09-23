@@ -5,6 +5,7 @@ namespace RPLib\Entities;
 use OutOfBoundsException;
 use OutOfRangeException;
 use RPLib\Core\GameManager;
+use RPLib\Entities\Interfaces\IEntity;
 use RPLib\Entities\Relations\LinkedEntity;
 use RPLib\Entities\Traits\Entity;
 use RPLib\Enums\TurnStatus;
@@ -14,7 +15,7 @@ use UnexpectedValueException;
  * Class Game
  * @package RPLib\Entities
  */
-class Game {
+class Game implements IEntity {
     use Entity {
         Entity::save as private saveParameters;
         Entity::setAttribute as private __setAttribute;

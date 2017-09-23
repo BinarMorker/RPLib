@@ -19,9 +19,9 @@ final class PlayerTest extends TestCase {
         $attribute->setName("Test");
         $attribute->setReference($reference);
         $player = new Player();
-        $player->addAttribute($attribute);
+        $player->setAttribute($attribute);
 
-        $this->assertTrue($player->hasAttribute($attribute));
+        $this->assertTrue($player->hasAttribute($attribute->getName()));
     }
 
     public function testPlayerCanHaveRegisteredStatistic() {
@@ -31,9 +31,9 @@ final class PlayerTest extends TestCase {
         $statistic->setName("Test");
         $statistic->setReference($reference);
         $player = new Player();
-        $player->addStatistic($statistic);
+        $player->setStatistic($statistic);
 
-        $this->assertTrue($player->hasStatistic($statistic));
+        $this->assertTrue($player->hasStatistic($statistic->getName()));
     }
 
     public function testPlayerCannotHaveDuplicateAttribute() {
@@ -45,8 +45,8 @@ final class PlayerTest extends TestCase {
         $attribute->setName("Test");
         $attribute->setReference($reference);
         $player = new Player();
-        $player->addAttribute($attribute);
-        $player->addAttribute($attribute);
+        $player->setAttribute($attribute);
+        $player->setAttribute($attribute);
     }
 
     public function testPlayerCannotHaveDuplicateStatistic() {
@@ -58,8 +58,8 @@ final class PlayerTest extends TestCase {
         $statistic->setName("Test");
         $statistic->setReference($reference);
         $player = new Player();
-        $player->addStatistic($statistic);
-        $player->addStatistic($statistic);
+        $player->setStatistic($statistic);
+        $player->setStatistic($statistic);
     }
 
     public function testPlayerCannotHaveUnregisteredAttribute() {
@@ -71,7 +71,7 @@ final class PlayerTest extends TestCase {
         $attribute->setName("Test");
         $attribute->setReference($reference);
         $player = new Player();
-        $player->addAttribute($attribute);
+        $player->setAttribute($attribute);
     }
 
     public function testPlayerCannotHaveUnregisteredStatistic() {
@@ -83,7 +83,7 @@ final class PlayerTest extends TestCase {
         $statistic->setName("Test");
         $statistic->setReference($reference);
         $player = new Player();
-        $player->addStatistic($statistic);
+        $player->setStatistic($statistic);
     }
 
 }
