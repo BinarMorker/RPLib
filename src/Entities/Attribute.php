@@ -141,7 +141,7 @@ class Attribute implements IIdentifiable {
      */
     public function save() {
         if ($this->reference == null) {
-            throw new UnexpectedValueException("The reference for this attribute does not exist");
+            throw new UnexpectedValueException("The reference for the attribute \"{$this->getName()}\" does not exist");
         }
 
         $this->__save([

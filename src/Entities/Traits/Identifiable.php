@@ -105,13 +105,13 @@ trait Identifiable {
             }
         }
 
-        $columns = join(',', $columns);
-        $values = join(',', $values);
-
         if ($this->id != null) {
             $values[] = $this->id;
             $columns[] = '`id`';
         }
+
+        $columns = join(',', $columns);
+        $values = join(',', $values);
 
         $storage->execute("REPLACE INTO `{$this->table}` ({$columns}) VALUES ({$values});");
         $this->id = $storage->getLastInsertId();

@@ -47,7 +47,7 @@ class AttributeReference implements IIdentifiable {
             return new self($results[0]['id']);
         }
 
-        throw new Exception("There was no attribute found by this name");
+        throw new Exception("There was no attribute found by the name \"{$name}\"");
     }
 
     /**

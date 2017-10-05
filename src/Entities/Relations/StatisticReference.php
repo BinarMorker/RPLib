@@ -41,13 +41,13 @@ class StatisticReference implements IIdentifiable {
 
     public static function create(string $name) : self {
         $storage = Storage::getInstance();
-        $results = $storage->query("SELECT `id`, `name` FROM `rplib_statistic_reference` WHERE `name` = {$name}");
+        $results = $storage->query("SELECT `id`, `name` FROM `rplib_statistic_reference` WHERE `name` = '{$name}'");
 
         if (count($results) > 0) {
             return new self($results[0]['id']);
         }
 
-        throw new Exception("There was no attribute found by this name");
+        throw new Exception("There was no attribute found by the name \"{$name}\"");
     }
 
     /**

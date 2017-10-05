@@ -66,11 +66,11 @@ class Turn implements IEntity {
      */
     public function setAttribute(Attribute $attribute) {
         if ($this->hasAttribute($attribute->getName())) {
-            throw new UnexpectedValueException("This attribute is already present.");
+            throw new UnexpectedValueException("The attribute \"{$attribute->getName()}\" is already present.");
         }
 
         if (!GameManager::getInstance()->getRegistry()->turns->hasAttribute($attribute->getReference())) {
-            throw new OutOfRangeException("This attribute can't be put on a turn.");
+            throw new OutOfRangeException("The attribute \"{$attribute->getName()}\" can't be put on a turn.");
         }
 
         $this->__setAttribute($attribute);
@@ -81,11 +81,11 @@ class Turn implements IEntity {
      */
     public function setStatistic(Statistic $statistic) {
         if ($this->hasStatistic($statistic->getName())) {
-            throw new UnexpectedValueException("This statistic is already present.");
+            throw new UnexpectedValueException("The statistic \"{$statistic->getName()}\" is already present.");
         }
 
         if (!GameManager::getInstance()->getRegistry()->turns->hasStatistic($statistic->getReference())) {
-            throw new OutOfRangeException("This statistic can't be put on a turn.");
+            throw new OutOfRangeException("The statistic \"{$statistic->getName()}\" can't be put on a turn.");
         }
 
         $this->__setStatistic($statistic);

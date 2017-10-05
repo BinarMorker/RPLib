@@ -35,7 +35,7 @@ class Registry {
      */
     public function addAttribute(AttributeReference $reference) {
         if ($this->hasAttribute($reference)) {
-            throw new UnexpectedValueException("This attribute is already present.");
+            throw new UnexpectedValueException("The attribute \"{$reference->getName()}\" is already present.");
         }
 
         $this->attributeReferences[] = $reference;
@@ -77,7 +77,7 @@ class Registry {
      */
     public function addStatistic(StatisticReference $reference) {
         if ($this->hasStatistic($reference)) {
-            throw new UnexpectedValueException("This statistic is already present.");
+            throw new UnexpectedValueException("The statistic \"{$reference->getName()}\" is already present.");
         }
 
         $this->statisticReferences[] = $reference;

@@ -141,7 +141,7 @@ class Statistic implements IIdentifiable {
      */
     public function save() {
         if ($this->reference == null) {
-            throw new UnexpectedValueException("The reference for this statistic does not exist");
+            throw new UnexpectedValueException("The reference for the statistic \"{$this->getName()}\" does not exist");
         }
 
         $this->__save([

@@ -180,11 +180,11 @@ class Game implements IEntity {
      */
     public function setAttribute(Attribute $attribute) {
         if ($this->hasAttribute($attribute->getName())) {
-            throw new UnexpectedValueException("This attribute is already present.");
+            throw new UnexpectedValueException("The attribute \"{$attribute->getName()}\" is already present.");
         }
 
         if (!GameManager::getInstance()->getRegistry()->games->hasAttribute($attribute->getReference())) {
-            throw new OutOfRangeException("This attribute can't be put on a game.");
+            throw new OutOfRangeException("The attribute \"{$attribute->getName()}\" can't be put on a game.");
         }
 
         $this->__setAttribute($attribute);
@@ -195,11 +195,11 @@ class Game implements IEntity {
      */
     public function setStatistic(Statistic $statistic) {
         if ($this->hasStatistic($statistic->getName())) {
-            throw new UnexpectedValueException("This statistic is already present.");
+            throw new UnexpectedValueException("The statistic \"{$statistic->getName()}\" is already present.");
         }
 
         if (!GameManager::getInstance()->getRegistry()->games->hasStatistic($statistic->getReference())) {
-            throw new OutOfRangeException("This statistic can't be put on a game.");
+            throw new OutOfRangeException("The statistic \"{$statistic->getName()}\" can't be put on a game.");
         }
 
         $this->__setStatistic($statistic);

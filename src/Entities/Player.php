@@ -44,11 +44,11 @@ class Player implements IEntity {
      */
     public function setAttribute(Attribute $attribute) {
         if ($this->hasAttribute($attribute->getName())) {
-            throw new UnexpectedValueException("This attribute is already present.");
+            throw new UnexpectedValueException("The attribute \"{$attribute->getName()}\" is already present.");
         }
 
         if (!GameManager::getInstance()->getRegistry()->players->hasAttribute($attribute->getReference())) {
-            throw new OutOfRangeException("This attribute can't be put on a player.");
+            throw new OutOfRangeException("The attribute \"{$attribute->getName()}\" can't be put on a player.");
         }
 
         $this->__setAttribute($attribute);
@@ -59,11 +59,11 @@ class Player implements IEntity {
      */
     public function setStatistic(Statistic $statistic) {
         if ($this->hasStatistic($statistic->getName())) {
-            throw new UnexpectedValueException("This statistic is already present.");
+            throw new UnexpectedValueException("The statistic \"{$statistic->getName()}\" is already present.");
         }
 
         if (!GameManager::getInstance()->getRegistry()->players->hasStatistic($statistic->getReference())) {
-            throw new OutOfRangeException("This statistic can't be put on a player.");
+            throw new OutOfRangeException("The statistic \"{$statistic->getName()}\" can't be put on a player.");
         }
 
         $this->__setStatistic($statistic);
