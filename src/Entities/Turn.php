@@ -31,6 +31,11 @@ class Turn implements IEntity {
      * @var int
      */
     private $status;
+    
+    /**
+     * @var Game
+     */
+    private $game;
 
     /**
      * Turn constructor.
@@ -49,6 +54,9 @@ class Turn implements IEntity {
                 }),
                 new StorageField('status', function($value) {
                     $this->status = $value;
+                }),
+                new StorageField('game', function($value) {
+                    $this->game = new Game($value);
                 })
             ]);
 
@@ -103,6 +111,20 @@ class Turn implements IEntity {
      */
     public function setPlayer(Player $player) {
         $this->player = $player;
+    }
+    
+    /**
+     * @return Game|null
+     */
+    public function getGame() : Game {
+        return $this->game;
+    }
+    
+    /**
+     * @param Game $game
+     */
+    public function setGame(Game $game) {
+        $this->game = $game;
     }
 
     /**
@@ -215,7 +237,10 @@ class Turn implements IEntity {
 
     public function save() {
         $this->saveParameters([
-            'name' => $this->getName()
+            'name' => $this->getName(),
+            'player' => (!is_null($this->player)) ? $this->player->getId() : null,
+            'game' => (!is_null($this->game)) ? $this->game->getId() : null,
+            'status' => $this->status
         ]);
     }
 }

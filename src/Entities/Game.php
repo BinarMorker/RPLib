@@ -52,7 +52,7 @@ class Game implements IEntity {
         $this->attributeLink = new LinkedEntity('rplib_game_attributes', 'game', 'attribute', Attribute::class);
         $this->statisticLink = new LinkedEntity('rplib_game_statistics', 'game', 'statistic', Statistic::class);
         $this->playerLink = new LinkedEntity('rplib_game_players', 'game', 'player', Player::class);
-        $this->turnLink = new LinkedEntity('rplib_game_turns', 'game', 'turn', Turn::class);
+        $this->turnLink = new LinkedEntity('rplib_turn', 'game', 'id', Turn::class);
 
         if (!is_null($this->id)) {
             $this->players = $this->loadLinked($this->playerLink);
