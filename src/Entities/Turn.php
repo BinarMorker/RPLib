@@ -56,7 +56,7 @@ class Turn implements IEntity {
                     $this->status = $value;
                 }),
                 new StorageField('game', function($value) {
-                    $this->game = new Game($value);
+                    //$this->game = new Game($value);
                 })
             ]);
 
