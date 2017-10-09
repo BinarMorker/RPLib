@@ -56,7 +56,7 @@ class Turn implements IEntity {
                     $this->status = $value;
                 }),
                 new StorageField('game', function($value) {
-                    //$this->game = new Game($value);
+                    $this->game = $value;
                 })
             ]);
 
@@ -73,10 +73,6 @@ class Turn implements IEntity {
      * @param Attribute $attribute
      */
     public function setAttribute(Attribute $attribute) {
-        /*if ($this->hasAttribute($attribute->getName())) {
-            throw new UnexpectedValueException("The attribute \"{$attribute->getName()}\" is already present.");
-        }*/
-
         if (!GameManager::getInstance()->getRegistry()->turns->hasAttribute($attribute->getReference())) {
             throw new OutOfRangeException("The attribute \"{$attribute->getName()}\" can't be put on a turn.");
         }
@@ -88,10 +84,6 @@ class Turn implements IEntity {
      * @param Statistic $statistic
      */
     public function setStatistic(Statistic $statistic) {
-        /*if ($this->hasStatistic($statistic->getName())) {
-            throw new UnexpectedValueException("The statistic \"{$statistic->getName()}\" is already present.");
-        }*/
-
         if (!GameManager::getInstance()->getRegistry()->turns->hasStatistic($statistic->getReference())) {
             throw new OutOfRangeException("The statistic \"{$statistic->getName()}\" can't be put on a turn.");
         }
@@ -117,14 +109,14 @@ class Turn implements IEntity {
      * @return Game|null
      */
     public function getGame() : Game {
-        return $this->game;
+        return new Game($this->game);
     }
     
     /**
      * @param Game $game
      */
     public function setGame(Game $game) {
-        $this->game = $game;
+        $this->game = $game->getId();
     }
 
     /**
@@ -239,7 +231,7 @@ class Turn implements IEntity {
         $this->saveParameters([
             'name' => $this->getName(),
             'player' => (!is_null($this->player)) ? $this->player->getId() : null,
-            'game' => (!is_null($this->game)) ? $this->game->getId() : null,
+            'game' => (!is_null($this->game)) ? $this->game : null,
             'status' => $this->status
         ]);
     }
