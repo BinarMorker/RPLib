@@ -182,12 +182,56 @@ trait Entity {
     }
 
     /**
+     * @param LinkedEntity $entity
+     * @return array
+     * @throws Exception
+     */
+    private function loadOrdered(LinkedEntity $entity) : array {
+        $storage = Storage::getInstance();
+        $results = $storage->query("SELECT `{$entity->getTargetField()}`, `position` FROM {$entity->getTableName()} WHERE `{$entity->getSourceField()}` = {$this->id}");
+        $objects = [];
+
+        try {
+            $class = new ReflectionClass($entity->getTargetEntity());
+
+            if (count($results) > 0) {
+                foreach ($results as $result) {
+                    $objects[$result['position']] = $class->newInstance($result[$entity->getTargetField()]);
+                }
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        ksort($objects);
+        return $objects;
+    }
+
+    /**
      * @param LinkedEntity $link
      * @param IIdentifiable $target
      */
     private function saveLinked(LinkedEntity $link, IIdentifiable $target) {
         $storage = Storage::getInstance();
         $storage->execute("REPLACE INTO `{$link->getTableName()}` ({$link->getSourceField()}, {$link->getTargetField()}) VALUES ({$this->id}, {$target->getId()})");
+    }
+
+    /**
+     * @param LinkedEntity $link
+     * @param IIdentifiable $target
+     * @param int $position
+     */
+    private function saveOrdered(LinkedEntity $link, IIdentifiable $target, int $position) {
+        $storage = Storage::getInstance();
+        $storage->execute("REPLACE INTO `{$link->getTableName()}` ({$link->getSourceField()}, {$link->getTargetField()}, position) VALUES ({$this->id}, {$target->getId()}, {$position})");
+    }
+
+    /**
+     * @param LinkedEntity $link
+     */
+    private function deleteLinked(LinkedEntity $link) {
+        $storage = Storage::getInstance();
+        $storage->execute("DELETE FROM `{$link->getTableName()}` WHERE {$link->getSourceField()} = {$this->id}");
     }
 
     /**

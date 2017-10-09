@@ -55,7 +55,7 @@ class Game implements IEntity {
         $this->turnLink = new LinkedEntity('rplib_turn', 'game', 'id', Turn::class);
 
         if (!is_null($this->id)) {
-            $this->players = $this->loadLinked($this->playerLink);
+            $this->players = $this->loadOrdered($this->playerLink);
             $this->turns = $this->loadLinked($this->turnLink);
             $this->attributes = $this->loadLinked($this->attributeLink);
             $this->statistics = $this->loadLinked($this->statisticLink);
@@ -127,6 +127,13 @@ class Game implements IEntity {
      */
     public function getPlayers() : array {
         return $this->players;
+    }
+
+    /**
+     * @param Player[] $players
+     */
+    public function setPlayers(array $players) {
+        $this->players = $players;
     }
 
     /**
@@ -205,14 +212,15 @@ class Game implements IEntity {
             'name' => $this->getName()
         ]);
 
-        foreach ($this->players as $player) {
+        $this->deleteLinked($this->playerLink);
+
+        foreach ($this->players as $index => $player) {
             $player->save();
-            $this->saveLinked($this->playerLink, $player);
+            $this->saveOrdered($this->playerLink, $player, $index);
         }
 
         foreach ($this->turns as $turn) {
             $turn->save();
-            //$this->saveLinked($this->turnLink, $turn);
         }
     }
 }
