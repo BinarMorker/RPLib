@@ -94,27 +94,31 @@ trait Identifiable {
         $storage = Storage::getInstance();
         $columns = [];
         $values = [];
+        $updates = [];
 
         foreach ($parameters as $key => $value) {
             $columns[] = "`{$key}`";
 
             if (is_int($value) || is_bool($value)) {
                 $values[] = "{$value}";
+                $updates[] = "`{$key}`={$value}";
             } else {
                 $values[] = "'{$value}'";
+                $updates[] = "`{$key}`='{$value}'";
             }
         }
 
-        if ($this->id != null) {
+        if (!is_null($this->id)) {
             $values[] = $this->id;
             $columns[] = '`id`';
         }
 
-        $columns = join(',', $columns);
-        $values = join(',', $values);
+        $columnsString = join(',', $columns);
+        $valuesString = join(',', $values);
+        $updateString = join(',', $updates);
 
-        $storage->execute("REPLACE INTO `{$this->table}` ({$columns}) VALUES ({$values});");
-        $this->id = $storage->getLastInsertId();
+        $storage->execute("INSERT INTO `{$this->table}` ({$columnsString}) VALUES ({$valuesString}) ON DUPLICATE KEY UPDATE $updateString;");
+        $this->id = is_null($this->id) ? $storage->getLastInsertId() : $this->id;
         return $this->id;
     }
 

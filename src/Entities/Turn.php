@@ -73,9 +73,9 @@ class Turn implements IEntity {
      * @param Attribute $attribute
      */
     public function setAttribute(Attribute $attribute) {
-        if ($this->hasAttribute($attribute->getName())) {
+        /*if ($this->hasAttribute($attribute->getName())) {
             throw new UnexpectedValueException("The attribute \"{$attribute->getName()}\" is already present.");
-        }
+        }*/
 
         if (!GameManager::getInstance()->getRegistry()->turns->hasAttribute($attribute->getReference())) {
             throw new OutOfRangeException("The attribute \"{$attribute->getName()}\" can't be put on a turn.");
@@ -88,9 +88,9 @@ class Turn implements IEntity {
      * @param Statistic $statistic
      */
     public function setStatistic(Statistic $statistic) {
-        if ($this->hasStatistic($statistic->getName())) {
+        /*if ($this->hasStatistic($statistic->getName())) {
             throw new UnexpectedValueException("The statistic \"{$statistic->getName()}\" is already present.");
-        }
+        }*/
 
         if (!GameManager::getInstance()->getRegistry()->turns->hasStatistic($statistic->getReference())) {
             throw new OutOfRangeException("The statistic \"{$statistic->getName()}\" can't be put on a turn.");
