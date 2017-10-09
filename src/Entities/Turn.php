@@ -127,6 +127,102 @@ class Turn implements IEntity {
     }
 
     /**
+     * @return bool
+     */
+    public function isReturnable() : bool {
+        switch ($this->status) {
+            case TurnStatus::RETURNED_THEN_FINISHED:
+            case TurnStatus::RETURNED_THEN_SKIPPED:
+            case TurnStatus::RETURNED_THEN_PAUSED:
+            case TurnStatus::NOT_STARTED:
+            case TurnStatus::FINISHED:
+            case TurnStatus::SKIPPED:
+                return $this->getGame()->getCurrentTurn()->getId() == $this->getId();
+                break;
+            case TurnStatus::ONGOING:
+            case TurnStatus::PAUSED:
+            case TurnStatus::FINISHED_THEN_RETURNED:
+            case TurnStatus::SKIPPED_THEN_RETURNED:
+            case TurnStatus::PAUSED_THEN_RETURNED:
+            default:
+                return true;
+                break;
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFinished() : bool {
+        switch ($this->status) {
+            case TurnStatus::RETURNED_THEN_FINISHED:
+            case TurnStatus::FINISHED:
+                return true;
+                break;
+            case TurnStatus::RETURNED_THEN_SKIPPED:
+            case TurnStatus::RETURNED_THEN_PAUSED:
+            case TurnStatus::NOT_STARTED:
+            case TurnStatus::SKIPPED:
+            case TurnStatus::ONGOING:
+            case TurnStatus::PAUSED:
+            case TurnStatus::FINISHED_THEN_RETURNED:
+            case TurnStatus::SKIPPED_THEN_RETURNED:
+            case TurnStatus::PAUSED_THEN_RETURNED:
+            default:
+                return false;
+                break;
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSkipped() : bool {
+        switch ($this->status) {
+            case TurnStatus::RETURNED_THEN_SKIPPED:
+            case TurnStatus::SKIPPED:
+                return true;
+                break;
+            case TurnStatus::RETURNED_THEN_FINISHED:
+            case TurnStatus::FINISHED:
+            case TurnStatus::RETURNED_THEN_PAUSED:
+            case TurnStatus::NOT_STARTED:
+            case TurnStatus::ONGOING:
+            case TurnStatus::PAUSED:
+            case TurnStatus::FINISHED_THEN_RETURNED:
+            case TurnStatus::SKIPPED_THEN_RETURNED:
+            case TurnStatus::PAUSED_THEN_RETURNED:
+            default:
+                return false;
+                break;
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOngoing() : bool {
+        switch ($this->status) {
+            case TurnStatus::ONGOING:
+            case TurnStatus::PAUSED:
+            case TurnStatus::FINISHED_THEN_RETURNED:
+            case TurnStatus::SKIPPED_THEN_RETURNED:
+            case TurnStatus::PAUSED_THEN_RETURNED:
+            case TurnStatus::RETURNED_THEN_PAUSED:
+                return true;
+                break;
+            case TurnStatus::RETURNED_THEN_SKIPPED:
+            case TurnStatus::SKIPPED:
+            case TurnStatus::RETURNED_THEN_FINISHED:
+            case TurnStatus::FINISHED:
+            case TurnStatus::NOT_STARTED:
+            default:
+                return false;
+                break;
+        }
+    }
+
+    /**
      *
      */
     public function finish() {
