@@ -7,7 +7,6 @@ use RPLib\Core\GameManager;
 use RPLib\Entities\Interfaces\IEntity;
 use RPLib\Entities\Relations\LinkedEntity;
 use RPLib\Entities\Traits\Entity;
-use UnexpectedValueException;
 
 /**
  * Class Player

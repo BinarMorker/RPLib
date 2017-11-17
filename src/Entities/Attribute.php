@@ -2,22 +2,21 @@
 
 namespace RPLib\Entities;
 
-use RPLib\Entities\Interfaces\IIdentifiable;
+use RPLib\Entities\Interfaces\IVersionable;
 use RPLib\Entities\Relations\AttributeReference;
 use RPLib\Entities\Relations\StorageField;
-use RPLib\Entities\Traits\Identifiable;
+use RPLib\Entities\Relations\VersionedEntity;
+use RPLib\Entities\Traits\Versionable;
 use RPLib\Enums\ValueType;
+use RPLib\Enums\VersionType;
 use UnexpectedValueException;
 
 /**
  * Class Attribute
  * @package RPLib\Entities
  */
-class Attribute implements IIdentifiable {
-    use Identifiable {
-        Identifiable::__construct as private initialize;
-        Identifiable::save as private __save;
-    }
+class Attribute implements IVersionable {
+    use Versionable;
 
     /**
      * @var AttributeReference
@@ -35,16 +34,19 @@ class Attribute implements IIdentifiable {
      */
     public function __construct(int $id = null) {
         $this->initialize('rplib_attribute', $id);
+        $this->versionLink = new VersionedEntity('rplib_attribute_version', 'attribute');
+        $this->version = 0;
 
         if (!is_null($id)) {
             $this->load([
                 new StorageField('reference', function($value) {
                     $this->setReference(new AttributeReference($value));
                 }),
-                new StorageField('value', function($value) {
-                    $this->setValue(unserialize($value));
+                new StorageField('version', function($value) {
+                    $this->setCurrentVersion($value);
                 })
             ]);
+            $this->value = $this->loadVersion($this->versionLink, VersionType::NONE, $this->getCurrentVersion());
         }
     }
 
@@ -127,6 +129,7 @@ class Attribute implements IIdentifiable {
         }
 
         $this->value = $value;
+        $this->setCurrentVersion(0);
     }
 
     /**
@@ -144,10 +147,20 @@ class Attribute implements IIdentifiable {
             throw new UnexpectedValueException("The reference for the attribute \"{$this->getName()}\" does not exist");
         }
 
-        $this->__save([
-            'name' => $this->getName(),
-            'reference' => $this->getReference()->getId(),
-            'value' => serialize($this->getValue())
-        ]);
+        if ($this->getCurrentVersion() <= 0) {
+            $this->__save([
+                'name' => $this->getName(),
+                'reference' => $this->getReference()->getId(),
+                'version' => $this->getVersionNumber($this->versionLink, VersionType::LATEST) + 1
+            ]);
+        } else {
+            $this->__save([
+                'name' => $this->getName(),
+                'reference' => $this->getReference()->getId(),
+                'version' => $this->getCurrentVersion()
+            ]);
+        }
+
+        $this->saveVersion($this->versionLink, $this->getValue(), $this->getCurrentVersion());
     }
 }

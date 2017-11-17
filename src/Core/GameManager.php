@@ -26,7 +26,6 @@ class GameManager {
      */
     protected function __construct() {
         $this->registry = new RegistryFactory();
-        $this->games = [];
     }
 
     /**
