@@ -140,6 +140,13 @@ class Attribute implements IVersionable {
     }
 
     /**
+     * @return array
+     */
+    public function getVersions() : array {
+        return $this->loadVersions($this->versionLink);
+    }
+
+    /**
      *
      */
     public function save() {

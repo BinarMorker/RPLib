@@ -66,6 +66,36 @@ trait Versionable {
 
     /**
      * @param VersionedEntity $entity
+     * @return array
+     * @throws Exception
+     */
+    private function loadVersions(VersionedEntity $entity) : array {
+        $storage = Storage::getInstance();
+        $response = [];
+
+        $query = "SELECT `value`, `version` 
+                  FROM {$entity->getTableName()} 
+                  WHERE `{$entity->getIdentifierField()}` = {$this->id}";
+        $results = $storage->query($query);
+
+        try {
+            if (count($results) > 0) {
+                foreach ($results as $result) {
+                    $response[] = [
+                        "version" => $result['version'],
+                        "value" => unserialize($result['value'])
+                    ];
+                }
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param VersionedEntity $entity
      * @param int $type
      * @param int $version
      * @return mixed
