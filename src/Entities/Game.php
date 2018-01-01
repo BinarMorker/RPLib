@@ -79,6 +79,10 @@ class Game implements IEntity {
     public function getCurrentTurn() : Turn {
         $lastTurn = end($this->turns);
 
+        if (!$lastTurn) {
+            return $this->getNextTurn();
+        }
+
         switch ($lastTurn->getStatus()) {
             case TurnStatus::PAUSED:
             case TurnStatus::RETURNED_THEN_PAUSED:
