@@ -4,6 +4,7 @@ namespace RPLib\Entities\Traits;
 
 use Exception;
 use RPLib\Core\Storage;
+use RPLib\Core\SerializationHelper;
 use RPLib\Entities\Relations\VersionedEntity;
 use RPLib\Enums\VersionType;
 use UnexpectedValueException;
@@ -83,7 +84,7 @@ trait Versionable {
                 foreach ($results as $result) {
                     $response[] = [
                         "version" => $result['version'],
-                        "value" => unserialize($result['value'])
+                        "value" => SerializationHelper::unserialize($result['value'])
                     ];
                 }
             }
@@ -127,7 +128,7 @@ trait Versionable {
 
         try {
             if (count($results) == 1) {
-                $response = unserialize($results[0]['value']);
+                $response = SerializationHelper::unserialize($results[0]['value']);
             }
         } catch (Exception $e) {
             throw $e;
