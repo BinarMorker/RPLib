@@ -144,7 +144,7 @@ trait Versionable {
      */
     private function saveVersion(VersionedEntity $link, $value, int $version = 0) {
         $storage = Storage::getInstance();
-        $serializedValue = serialize($value);
+        $serializedValue = addslashes(serialize($value));
 
         if ($version <= 0) {
             $version = $this->getVersionNumber($link, VersionType::LATEST) + 1;
